@@ -1,0 +1,65 @@
+PROMPT EVOLUTION - SAM3 GEOLOGICAL CORE FRACTURE SEGMENTATION
+You are evolving a single SAM3 text prompt used to segment fractures in geological core images.
+The prompt is passed directly to SAM3 as a text concept query. You do NOT write Python logic,
+chain topology, thresholds, or postprocessing.
+
+Consider the next guidelines:
+1) Prompt optimization is a high-dimensional search over short open-vocabulary phrases.
+   Effective prompts may combine:
+   - Visual concept naming: crack, fracture, fissure, vein, linear break
+   - Geological context: drill core, rock core, borehole core, mineral surface
+   - Appearance cues: dark, black, thin, branching, open, pale, light, healed, mineral-filled
+   - Negative disambiguation: avoid confusing bedding, shadows, scratches, grain texture, and labels
+2) Implementation details:
+   - entrypoint() must return ONE plain Python string
+   - No format placeholders, no dict, no list, no comments in the returned value
+   - The string is used verbatim as SAM3 text_prompt for every image or patch
+
+TASK DEFINITION - GEOLOGICAL CORE BINARY MASK MATCHING
+
+Challenge: Maximize overlap between SAM3-predicted crack mask and ground-truth mask on
+geological core images containing natural and technogenic fractures, including dark open
+cracks and light healed/mineralized cracks.
+
+OBJECTIVE
+Return a SAM3 text prompt such that:
+ 1) The prompt is a non-empty English phrase describing fracture regions
+ 2) SAM3 segments crack-like regions when prompted with this phrase
+ 3) The union of SAM3 instance masks best matches the binary ground-truth mask
+ 4) Mean Dice/F1 fitness across the training subset is maximized
+
+Output: SAM3 text prompt string | Goal: validation fitness (mean Dice) > 0.5
+
+FIXED PIPELINE (NOT EVOLVABLE)
+- Dataset: CoreFrac image/mask pairs (color core image + binary fracture mask)
+- CARL chain: fixed single tool step calling sam3_segment_cracks
+- SAM3 mode: text prompt only on full image or fixed vertical patches
+- Postprocessing: union all SAM3 masks above fixed confidence, resize to GT shape, binarize
+- Fitness: mean Dice; IoU/precision/recall/success_rate/latency are diagnostics only
+
+GENOME FORMAT
+Implement `def entrypoint()` that returns:
+- A single str - the SAM3 text prompt (concept phrase)
+
+CONSTRAINTS
+- Maximum prompt length: 180 characters
+- Must NOT include file names, dataset split names, or sample identifiers
+- Must NOT include mask statistics or per-image labels
+- Do NOT return Python code, JSON, markdown, or chain specifications
+- Do NOT attempt to change SAM3 model, confidence threshold, or metric logic
+
+FAILURE MODES
+- Empty or whitespace-only prompt
+- Prompt too long (>180 chars)
+- Prompt contains forbidden dataset leakage tokens
+- Non-string return type from entrypoint()
+
+OUTPUT FORMAT
+Implement `def entrypoint()` that returns a single SAM3 text prompt string.
+
+TASK HINTS
+- SAM3 may need explicit geological context: "drill core" or "rock core"
+- Include both dark open cracks and light mineral-filled/healed fractures when useful
+- success_rate tracks whether SAM3 returns any mask; zero success_rate yields zero fitness
+- Overly generic prompts ("object", "region") may produce poor masks
+- Overly long prompts may dilute the concept signal

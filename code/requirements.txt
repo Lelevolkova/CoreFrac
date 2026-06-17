@@ -1,0 +1,16 @@
+# Core runtime for the standalone scripts (distillation, inference, eval, zero-shot).
+numpy>=1.24
+pillow>=9.5
+
+# UNet distillation / inference (distill_unet.py, infer_unet.py)
+torch>=2.0
+torchvision>=0.15
+
+# Zero-shot open-vocabulary baselines (zero_shot_open_seg.py)
+# Install the subset you intend to run:
+#   CLIPSeg / OWLv2 / Florence-2 come from HuggingFace transformers.
+transformers>=4.40
+
+# NOTE: the prompt-evolution loop (scripts/run_evolution.sh, problems/.../test.py)
+# additionally requires the GigaEvo evolutionary framework, a SAM3 checkpoint,
+# an OpenAI-compatible LLM inference endpoint, and Redis. See README.md.

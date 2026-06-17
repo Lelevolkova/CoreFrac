@@ -1,0 +1,14 @@
+Anonymized dataset release for peer review
+==========================================
+
+The CoreFrac dataset accompanies a paper currently under double-blind review.
+All site, well, operator, and depth metadata have been removed, and drill-core
+identifiers have been anonymized (core_0001 … core_0200). Image and mask files
+were re-encoded to strip EXIF / embedded metadata.
+
+For the review period, this dataset is provided solely for the purpose of
+evaluating the submission. Redistribution outside of the review process is not
+permitted.
+
+Upon acceptance, the dataset will be released under a permissive data license
+(CC BY 4.0) with full attribution.

@@ -1,0 +1,81 @@
+specs:
+  fitness:
+    description: "Primary objective - mean tolerance-F1 (soft Dice) between SAM3 union mask and GT fracture mask: a pixel counts as correct within COREFRAC_METRIC_TOLERANCE px (default 2) of the opposite mask. Robust to sub-pixel centerline shift on hair-thin cracks. Higher is better."
+    decimals: 4
+    is_primary: true
+    higher_is_better: true
+    lower_bound: 0.0
+    upper_bound: 1.0
+    include_in_prompts: true
+    significant_change: 0.01
+    sentinel_value: -1000.0
+  dice_strict:
+    description: "Strict pixel Dice (no tolerance) between predicted and GT fracture masks. Reported for reference against the legacy strict-metric run."
+    decimals: 4
+    is_primary: false
+    higher_is_better: true
+    lower_bound: 0.0
+    upper_bound: 1.0
+    include_in_prompts: true
+    significant_change: 0.01
+    sentinel_value: 0.0
+  iou:
+    description: "Strict pixel intersection-over-union between predicted and ground-truth fracture masks."
+    decimals: 4
+    is_primary: false
+    higher_is_better: true
+    lower_bound: 0.0
+    upper_bound: 1.0
+    include_in_prompts: true
+    significant_change: 0.01
+    sentinel_value: 0.0
+  precision:
+    description: "Mean tolerance precision: fraction of predicted pixels within tolerance of a GT crack pixel."
+    decimals: 4
+    is_primary: false
+    higher_is_better: true
+    lower_bound: 0.0
+    upper_bound: 1.0
+    include_in_prompts: false
+    significant_change: 0.01
+    sentinel_value: 0.0
+  recall:
+    description: "Mean tolerance recall: fraction of GT crack pixels within tolerance of a predicted pixel."
+    decimals: 4
+    is_primary: false
+    higher_is_better: true
+    lower_bound: 0.0
+    upper_bound: 1.0
+    include_in_prompts: false
+    significant_change: 0.01
+    sentinel_value: 0.0
+  success_rate:
+    description: "Fraction of samples where SAM3 returned at least one mask above threshold."
+    decimals: 4
+    is_primary: false
+    higher_is_better: true
+    lower_bound: 0.0
+    upper_bound: 1.0
+    include_in_prompts: true
+    significant_change: 0.01
+    sentinel_value: 0.0
+  avg_latency_sec:
+    description: "Average SAM3 inference latency per sample in seconds."
+    decimals: 3
+    is_primary: false
+    higher_is_better: false
+    lower_bound: 0.0
+    upper_bound: 600.0
+    include_in_prompts: false
+    significant_change: 0.5
+    sentinel_value: 600.0
+  is_valid:
+    description: "Whether the program is valid (1 valid, 0 invalid)"
+    decimals: 0
+    is_primary: false
+    higher_is_better: true
+    lower_bound: 0.0
+    upper_bound: 1.0
+    include_in_prompts: true
+    significant_change: 1.0
+    sentinel_value: 0.0
