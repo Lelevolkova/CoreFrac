@@ -68,7 +68,7 @@ remain reproducible; do not use it for supervised training.
 | Distilled U-Net (Table 1) | `code/distill_unet.py --stage all` |
 | Matched-cap rank-8 LoRA (Table 1) | `code/train_sam3_lora.py` with `configs/lora/corefrac_sam3_lora_r8_grouped.yaml` |
 | Maintenance under domain shift (Table 2) | `code/eval_transfer.py` |
-| Paired confidence intervals | `code/cluster_bootstrap.py` |
+| Paired confidence intervals | `code/cluster_bootstrap.py`, fed a long-format CSV of per-patch, per-seed scores (header documented in the script) |
 | Prompt evolution loop | `code/problems/prompts/corefrac/` (requires the GigaEvo framework) |
 
 The primary metric is soft tolerance-F1 at a 2-pixel tolerance, with strict
