@@ -5,7 +5,8 @@ within a core. Treating the 172 patches as independent understates uncertainty.
 This script resamples whole source cores with replacement and reports, for a
 pair of systems, each mean and the paired difference with a percentile CI.
 
-Input is a long-format CSV of per-patch scores with the header:
+Input is a long-format CSV of per-patch scores, exported from the evaluation
+scripts (no score dump ships with this repository), with the header:
 
     sample_id,source_core,label,system,seed,metric,value
 
@@ -15,7 +16,7 @@ for `metric` (e.g. soft_f1 or strict_dice). Scores are averaged over seeds per
 patch before resampling, matching how the paper reports three-seed means.
 
 Usage:
-    python cluster_bootstrap.py --scores results/test_scores.csv \
+    python cluster_bootstrap.py --scores test_scores.csv \
         --system-a evolved_prompt --system-b lora_r8 \
         --metric soft_f1 --subset positive
 """
