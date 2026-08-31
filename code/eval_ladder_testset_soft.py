@@ -1,8 +1,8 @@
 """Held-out test-set eval of a prompt ladder under the SOFT (tolerance) metric.
 
-Successor to eval_ladder_testset.py for the corefrac
-run. For every patch of the 176-patch test split it runs SAM3 once per ladder
-prompt and records BOTH:
+Successor to eval_ladder_testset.py for the corefrac run. For every patch of
+the test split named by COREFRAC_SPLIT_MANIFEST (172 patches under the
+source-grouped split) it runs SAM3 once per ladder prompt and records BOTH:
 
   * soft tolerance-F1 (the new primary "dice"; tol = COREFRAC_METRIC_TOLERANCE px)
   * strict pixel Dice ("dice_strict") and strict IoU ("iou")
@@ -61,7 +61,7 @@ def main() -> None:
         "COREFRAC_ROOT", str(BUNDLE / "data" / "corefrac/patches")
     )
     # setdefault so callers (e.g. the B7 maintenance runner) can point this at a
-    # domain-specific split manifest; otherwise the standard 176-patch test split.
+    # domain-specific split manifest; otherwise the test split of the manifest.
     os.environ.setdefault(
         "COREFRAC_SPLIT_MANIFEST",
         str(BUNDLE / "problems" / "prompts" / PROBLEM / "corefrac_split_manifest.json"),
@@ -69,7 +69,7 @@ def main() -> None:
     os.environ["COREFRAC_EVAL_MODE"] = "full"
     os.environ["COREFRAC_METRIC_TOLERANCE"] = str(args.tolerance)
     os.environ.setdefault("SAM3_DEVICE", "cuda")
-    os.environ.setdefault("SAM3_MODEL_NAME", "MTerryJack/sam3")
+    os.environ.setdefault("SAM3_MODEL_NAME", "facebook/sam3")
     os.environ.setdefault("SAM3_CONFIDENCE", "0.5")
     os.environ.setdefault("SAM3_CUDA_INDEX", "0")
     os.environ.setdefault("SAM3_GPU_SLOT_DIR", f"/tmp/corefrac_eval_soft_slots_s{args.shard}")

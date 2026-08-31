@@ -1,0 +1,26 @@
+# Control (keep unchanged in every comparison)
+OLD_CHAMPION | dark, thin, branching crack in drill core
+
+# Priority 1: main variants
+P01 | thin irregular fracture trace crossing drill core
+P02 | dark thin branching fracture in drill core
+P03 | narrow branching fracture within rock core material
+P04 | dark hairline fissure cutting through drill core
+P05 | continuous narrow fracture trace across rock core
+P06 | dark open crack or pale mineral-filled fracture in drill core
+P07 | pale mineral-filled healed fracture in rock core
+P08 | thin branching fracture network through drill core
+
+# Priority 2: systematic ablations
+P09 | thin irregular crack crossing drill core
+P10 | thin irregular fissure crossing drill core
+P11 | thin branching fracture in borehole core
+P12 | visible narrow fracture trace in drill core
+P13 | dark open fracture cutting across rock core
+P14 | pale healed fracture trace crossing dark rock core
+P15 | irregular fracture inside the rock core material
+
+# Priority 3: hard-negative diagnostics
+P16 | thin branching fracture in drill core, not a shadow or core edge
+P17 | irregular fracture trace in rock core, not a paint mark or label
+P18 | narrow crack in drill core, not bedding or grain texture

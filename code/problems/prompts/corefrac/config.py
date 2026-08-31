@@ -22,9 +22,9 @@ DATASET_CONFIG = {
     "train_split": "train",
     "val_split": "val",
     "test_split": "test",
-    # The released benchmark split (96/178/176 patches) is defined by the
-    # split manifest below; these fractions are only the fallback used when no
-    # manifest is provided. They match the realized split proportions.
+    # The headline source-grouped split (99/179/172 patches from 18/25/23
+    # cores) is defined by the split manifest below; these fractions are only
+    # the fallback used when no manifest is provided.
     "train_fraction": float(os.environ.get("COREFRAC_TRAIN_FRACTION", "0.213")),
     "val_fraction": float(os.environ.get("COREFRAC_VAL_FRACTION", "0.396")),
     "test_fraction": float(os.environ.get("COREFRAC_TEST_FRACTION", "0.391")),
@@ -60,7 +60,7 @@ PATCH_CONFIG = {
 
 SAM3_CONFIG = {
     "backend": os.environ.get("SAM3_BACKEND", "transformers"),
-    "model_name": os.environ.get("SAM3_MODEL_NAME", "MTerryJack/sam3"),
+    "model_name": os.environ.get("SAM3_MODEL_NAME", "facebook/sam3"),
     "checkpoint_path": os.environ.get("SAM3_CHECKPOINT_PATH"),
     "load_from_hf": os.environ.get("SAM3_LOAD_FROM_HF", "false").lower()
     in {"1", "true", "yes"},

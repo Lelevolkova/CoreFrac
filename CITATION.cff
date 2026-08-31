@@ -1,0 +1,40 @@
+cff-version: 1.2.0
+message: "If you use CoreFrac, please cite the accompanying paper."
+title: "CoreFrac: a pixel-level benchmark and prompt-evolution pipeline for drill-core fracture segmentation"
+repository-code: "https://github.com/Lelevolkova/CoreFrac"
+license: MIT
+authors:
+  - family-names: Volkova
+    given-names: Olga
+  - family-names: Glazkov
+    given-names: Nikita
+  - family-names: Pchelin
+    given-names: Konstantin
+  - family-names: Bespalov
+    given-names: Iaroslav
+  - family-names: Baraboshkin
+    given-names: Evgeny
+  - family-names: Orlov
+    given-names: Denis
+  - family-names: Dylov
+    given-names: Dmitry
+preferred-citation:
+  type: conference-paper
+  title: "Adapt the Words, Freeze the Model: LLM Prompt Evolution for Domain-Shift-Robust Segmentation"
+  year: 2026
+  collection-title: "Proceedings of the 2026 Conference on Empirical Methods in Natural Language Processing: Industry Track"
+  authors:
+    - family-names: Volkova
+      given-names: Olga
+    - family-names: Glazkov
+      given-names: Nikita
+    - family-names: Pchelin
+      given-names: Konstantin
+    - family-names: Bespalov
+      given-names: Iaroslav
+    - family-names: Baraboshkin
+      given-names: Evgeny
+    - family-names: Orlov
+      given-names: Denis
+    - family-names: Dylov
+      given-names: Dmitry

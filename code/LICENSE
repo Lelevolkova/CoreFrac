@@ -1,13 +1,24 @@
-Anonymized release for peer review
-==================================
+MIT License
 
-This code accompanies a paper currently under double-blind review. The
-copyright holder and author identities are intentionally withheld to preserve
-anonymity.
+Copyright (c) 2026 The CoreFrac authors
 
-For the review period, this material is provided solely for the purpose of
-evaluating the submission. Redistribution outside of the review process is not
-permitted.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-Upon acceptance, this release will be re-licensed under a permissive open-source
-license (MIT) with full attribution.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+Note: SAM 3 weights are an external dependency under their own license and are
+not redistributed here.

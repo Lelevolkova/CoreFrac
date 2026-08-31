@@ -1,0 +1,223 @@
+# Matched-cap rank-8 LoRA baseline on SAM 3 (source-grouped protocol).
+#
+# This is the experiment protocol reported in the paper. Paths are given as
+# repository-relative defaults; override them with the same environment
+# variables the rest of the code uses (COREFRAC_ROOT, COREFRAC_SPLIT_MANIFEST).
+
+schema_version: "corefrac-lora-1"
+experiment_name: "corefrac_sam3_lora_r8_grouped"
+output_dir: "outputs/corefrac_sam3_lora_r8_grouped"
+
+model:
+  implementation: "huggingface_transformers"
+  model_id: "facebook/sam3"
+  processor_id: "facebook/sam3"
+  image_size: 1008
+  confidence_threshold: 0.5
+  mask_threshold: 0.5
+  dtype: "bfloat16"
+  gradient_checkpointing: true
+  use_flash_attention: true
+
+lora:
+  enabled: true
+  rank: 8
+  alpha: 16
+  dropout: 0.05
+  bias: "none"
+
+  target_module_suffixes:
+    - "q_proj"
+    - "v_proj"
+
+  include_component_patterns:
+    - ".*vision_encoder.*"
+    - ".*detr_encoder.*"
+    - ".*detr_decoder.*"
+
+  exclude_component_patterns:
+    - ".*text_encoder.*"
+    - ".*language_backbone.*"
+    - ".*geometry_encoder.*"
+    - ".*segmentation_head.*"
+    - ".*mask_decoder.*"
+    - ".*presence_head.*"
+
+  # Reported paper configuration: 1.29 M trainable parameters.
+  expected_trainable_parameters:
+    min: 1000000
+    max: 1800000
+  fail_if_no_targets: true
+  fail_if_outside_parameter_range: true
+  save_adapter_only: true
+
+data:
+  dataset_name: "CoreFrac"
+  dataset_root: "dataset/patches"
+  manifest_path: "dataset/patches/splits_grouped/corefrac_grouped_split_manifest.json"
+  # Required: the fixed concept phrase used while training LoRA. Pass the same
+  # string via --prompt if this field is left empty.
+  training_prompt: ""
+  group_key: "source_core"
+  image_column: "image_path"
+  mask_column: "mask_path"
+  label_column: "label"
+
+  splits:
+    train:
+      name: "train"
+      manifest_size: 99
+      source_cores: 18
+      adaptation_subset_path: "dataset/patches/splits_grouped/adaptation_pool_96.json"
+      selected_patches: 96
+      expected_positive: 80
+      expected_empty: 16
+      use_all_selected_patches_each_epoch: true
+    validation:
+      name: "val"
+      patches: 179
+      expected_positive: 143
+      expected_empty: 36
+      source_cores: 25
+    test:
+      name: "test"
+      patches: 172
+      expected_positive: 134
+      expected_empty: 38
+      source_cores: 23
+
+  integrity_checks:
+    require_unique_sample_ids: true
+    require_zero_group_overlap: true
+    require_zero_spatial_overlap: true
+    require_nonempty_train_masks_preserved: true
+    require_empty_train_masks_preserved: true
+    fail_on_count_mismatch: true
+
+preprocessing:
+  resize:
+    height: 1008
+    width: 1008
+    image_interpolation: "bilinear"
+    mask_interpolation: "nearest"
+  normalize_with_model_processor: true
+
+augmentation:
+  horizontal_flip_probability: 0.5
+  vertical_flip_probability: 0.5
+  random_brightness_probability: 0.25
+  random_brightness_limit: 0.10
+  random_contrast_probability: 0.25
+  random_contrast_limit: 0.10
+  # Avoid aggressive geometric augmentation for thin fracture masks.
+  random_rotation_degrees: 0
+  random_crop: false
+
+training:
+  optimizer: "adamw"
+  learning_rate: 3.0e-5
+  learning_rate_candidates:
+    - 1.0e-5
+    - 3.0e-5
+    - 1.0e-4
+  weight_decay: 0.01
+  adam_beta1: 0.9
+  adam_beta2: 0.999
+  adam_epsilon: 1.0e-8
+  scheduler: "cosine"
+  warmup_ratio: 0.10
+  max_epochs: 40
+  per_device_train_batch_size: 1
+  per_device_eval_batch_size: 1
+  gradient_accumulation_steps: 4
+  num_gpus: 2
+  expected_effective_batch_size: 8
+  max_grad_norm: 1.0
+  mixed_precision: "bf16"
+  dataloader_num_workers: 8
+  drop_last: false
+  shuffle_train: true
+
+loss:
+  components:
+    - name: "binary_cross_entropy_with_logits"
+      weight: 1.0
+    - name: "soft_dice"
+      weight: 1.0
+  preserve_empty_examples: true
+  empty_example_weight: 1.0
+
+checkpoint_selection:
+  evaluation_frequency_epochs: 2
+  primary_metric: "validation.soft_f1_all"
+  mode: "max"
+  tie_tolerance: 0.002
+  tie_breakers:
+    - metric: "validation.soft_f1_positive"
+      mode: "max"
+    - metric: "validation.empty_false_positives"
+      mode: "min"
+    - metric: "epoch"
+      mode: "min"
+  early_stopping:
+    enabled: true
+    patience_evaluations: 6
+    minimum_delta: 0.002
+  never_select_on_test: true
+  save_best_only: true
+
+metric_definition:
+  soft_f1_tolerance_pixels: 2
+  empty_ground_truth_empty_prediction_score: 1.0
+  inference_error_score: 0.0
+  report:
+    - "soft_f1_positive"
+    - "soft_f1_all"
+    - "strict_dice_positive"
+    - "strict_iou_positive"
+    - "empty_false_positives"
+    - "inference_error_count"
+
+hyperparameter_selection:
+  # Run the LR sweep with one fixed development seed, using grouped validation
+  # only. Test remains untouched until the configuration is frozen.
+  development_seed: 0
+  sweep_parameters:
+    learning_rate:
+      - 1.0e-5
+      - 3.0e-5
+      - 1.0e-4
+  selection_metric: "validation.soft_f1_all"
+  freeze_configuration_before_test: true
+
+final_evaluation:
+  seeds:
+    - 0
+    - 1
+    - 2
+  evaluate_test_once_per_seed: true
+  aggregate_as: "mean_and_sample_standard_deviation"
+  confidence_intervals:
+    method: "source_core_cluster_bootstrap"
+    confidence_level: 0.95
+    bootstrap_replicates: 10000
+    paired_against:
+      - "frozen_sam3_evolved_prompt"
+
+reproducibility:
+  deterministic_algorithms: true
+  cudnn_benchmark: false
+  record:
+    - "git_commit"
+    - "model_revision"
+    - "adapter_target_module_names"
+    - "trainable_parameter_count"
+    - "resolved_config"
+    - "split_manifest_sha256"
+    - "adaptation_subset_sha256"
+    - "per_seed_predictions"
+    - "per_source_metrics"
+    - "gpu_hours"
+    - "wall_clock_seconds"
+    - "peak_vram_mb"
+    - "adapter_size_bytes"

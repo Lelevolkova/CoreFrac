@@ -1,4 +1,4 @@
-"""Open-weight zero-shot segmentation baselines on the CoreFrac 176-patch test.
+"""Open-weight zero-shot segmentation baselines on the CoreFrac test split.
 
 On-prem, open-weight alternatives to the VLM "draw-the-mask" row, all runnable from
 transformers 4.38 (no SAM 3 needed):

@@ -1,1 +1,1 @@
-"""CoreFrac prompt-evolution code release (anonymized)."""
+"""CoreFrac prompt-evolution code release."""

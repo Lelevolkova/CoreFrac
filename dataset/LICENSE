@@ -1,14 +1,28 @@
-Anonymized dataset release for peer review
-==========================================
+CoreFrac dataset license
+========================
 
-The CoreFrac dataset accompanies a paper currently under double-blind review.
-All site, well, operator, and depth metadata have been removed, and drill-core
-identifiers have been anonymized (core_0001 … core_0200). Image and mask files
-were re-encoded to strip EXIF / embedded metadata.
+The CoreFrac images, masks, and metadata in this directory are released under
+the Creative Commons Attribution 4.0 International license (CC BY 4.0):
 
-For the review period, this dataset is provided solely for the purpose of
-evaluating the submission. Redistribution outside of the review process is not
-permitted.
+    https://creativecommons.org/licenses/by/4.0/
 
-Upon acceptance, the dataset will be released under a permissive data license
-(CC BY 4.0) with full attribution.
+You are free to share and adapt the material for any purpose, including
+commercially, provided you give appropriate credit and indicate if changes
+were made. Please cite the accompanying paper (see CITATION.cff in the
+repository root).
+
+Provenance and privacy
+----------------------
+
+The imagery is used with the permission of the data owner. It contains no
+personal data. All site, well, operator, and depth metadata have been removed,
+drill-core identifiers are anonymized to core_0001 ... core_0200, and every
+file was re-encoded to strip EXIF and embedded metadata.
+
+Intended use
+------------
+
+Automated fracture logging is decision support. The masks are expert
+annotations with a measured inter-annotator ceiling (soft tolerance-F1 0.86);
+they are not a substitute for expert review in safety- or investment-critical
+interpretation.

@@ -31,7 +31,7 @@ export COREFRAC_TRAIN_N_SAMPLES="${COREFRAC_TRAIN_N_SAMPLES:-96}"
 
 # SAM 3 (GPU). Concurrent validation workers are spread across visible GPUs.
 export SAM3_DEVICE="${SAM3_DEVICE:-cuda}"
-export SAM3_MODEL_NAME="${SAM3_MODEL_NAME:-MTerryJack/sam3}"
+export SAM3_MODEL_NAME="${SAM3_MODEL_NAME:-facebook/sam3}"
 export SAM3_CONFIDENCE="${SAM3_CONFIDENCE:-0.5}"
 export SAM3_GPU_SLOT_DIR="${SAM3_GPU_SLOT_DIR:-/tmp/corefrac_gpu_slots}"
 

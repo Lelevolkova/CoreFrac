@@ -6,10 +6,19 @@ pillow>=9.5
 torch>=2.0
 torchvision>=0.15
 
-# Zero-shot open-vocabulary baselines (zero_shot_open_seg.py)
-# Install the subset you intend to run:
-#   CLIPSeg / OWLv2 / Florence-2 come from HuggingFace transformers.
-transformers>=4.40
+# SAM 3 (Sam3Model / Sam3Processor) and the zero-shot open-vocabulary baselines
+# (CLIPSeg, OWLv2, Florence-2) all come from HuggingFace transformers.
+transformers>=5.0.0
+
+# Matched-cap rank-8 LoRA baseline (code/train_sam3_lora.py).
+peft>=0.11
+accelerate>=0.30
+pyyaml>=6.0
+scipy>=1.10
+# Optional: FlashAttention 2, used when model.use_flash_attention is true.
+# flash-attn
+
+# cluster_bootstrap.py needs only numpy and the standard library.
 
 # NOTE: the prompt-evolution loop (scripts/run_evolution.sh, problems/.../test.py)
 # additionally requires the GigaEvo evolutionary framework, a SAM3 checkpoint,

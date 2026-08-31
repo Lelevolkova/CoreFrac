@@ -112,7 +112,7 @@ def _pseudo_path(split: str, sample_id: str) -> Path:
 # --------------------------------------------------------------------------- #
 def stage_labels(splits: list[str], prompt: str) -> None:
     os.environ.setdefault("SAM3_DEVICE", "cuda")
-    os.environ.setdefault("SAM3_MODEL_NAME", "MTerryJack/sam3")
+    os.environ.setdefault("SAM3_MODEL_NAME", "facebook/sam3")
     os.environ.setdefault("SAM3_CONFIDENCE", "0.5")
     os.environ.setdefault("SAM3_CUDA_INDEX", "0")
     os.environ.setdefault("SAM3_GPU_SLOT_DIR", "/tmp/corefrac_distill_slots")

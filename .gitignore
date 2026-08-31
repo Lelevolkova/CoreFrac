@@ -1,0 +1,22 @@
+# Run artifacts: traces, logs, and intermediate predictions stay out of the release.
+outputs/
+runs/
+logs/
+*.log
+pseudo/
+.cache/
+wandb/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.ipynb_checkpoints/
+
+# Trained weights are not part of this release.
+*.pt
+*.pth
+*.safetensors
+
+.DS_Store

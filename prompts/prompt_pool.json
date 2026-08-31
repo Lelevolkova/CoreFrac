@@ -1,0 +1,161 @@
+{
+  "schema_version": 1,
+  "task": "CoreFrac SAM3 text-prompt refresh",
+  "status": "evaluation prompt set",
+  "constraints": {
+    "language": "English",
+    "max_characters": 180,
+    "output_type": "one plain concept phrase"
+  },
+  "control": {
+    "id": "OLD_CHAMPION",
+    "prompt": "dark, thin, branching crack in drill core",
+    "role": "unchanged reference from the supplied artifact"
+  },
+  "prompts": [
+    {
+      "id": "P01",
+      "prompt": "thin irregular fracture trace crossing drill core",
+      "family": "geometry_primary",
+      "priority": 1,
+      "role": "contrast-independent primary variant",
+      "risk": "may retrieve non-fracture linear traces"
+    },
+    {
+      "id": "P02",
+      "prompt": "dark thin branching fracture in drill core",
+      "family": "champion_refinement",
+      "priority": 1,
+      "role": "minimal mutation of the old champion",
+      "risk": "retains dark-contrast bias"
+    },
+    {
+      "id": "P03",
+      "prompt": "narrow branching fracture within rock core material",
+      "family": "interior_context",
+      "priority": 1,
+      "role": "positive wording intended to suppress core-edge responses",
+      "risk": "within may reduce recall for fractures touching an edge"
+    },
+    {
+      "id": "P04",
+      "prompt": "dark hairline fissure cutting through drill core",
+      "family": "dark_open",
+      "priority": 1,
+      "role": "thin dark open-fracture variant",
+      "risk": "may miss wide breaks and pale healed traces"
+    },
+    {
+      "id": "P05",
+      "prompt": "continuous narrow fracture trace across rock core",
+      "family": "trace_continuity",
+      "priority": 1,
+      "role": "continuity-focused variant",
+      "risk": "may favor long traces over short fragments"
+    },
+    {
+      "id": "P06",
+      "prompt": "dark open crack or pale mineral-filled fracture in drill core",
+      "family": "dual_polarity",
+      "priority": 1,
+      "role": "joint dark-open and pale-healed appearance variant",
+      "risk": "the disjunction may dilute the concept signal"
+    },
+    {
+      "id": "P07",
+      "prompt": "pale mineral-filled healed fracture in rock core",
+      "family": "healed_pale",
+      "priority": 1,
+      "role": "specialist for light healed or mineralized fractures",
+      "risk": "may confuse intact mineral veins with labeled fractures"
+    },
+    {
+      "id": "P08",
+      "prompt": "thin branching fracture network through drill core",
+      "family": "branching_network",
+      "priority": 1,
+      "role": "branching and multicomponent fracture variant",
+      "risk": "network may under-retrieve isolated single fractures"
+    },
+    {
+      "id": "P09",
+      "prompt": "thin irregular crack crossing drill core",
+      "family": "noun_ablation",
+      "priority": 2,
+      "role": "crack versus fracture noun ablation",
+      "risk": "generic crack semantics may reduce geological specificity"
+    },
+    {
+      "id": "P10",
+      "prompt": "thin irregular fissure crossing drill core",
+      "family": "noun_ablation",
+      "priority": 2,
+      "role": "fissure versus fracture noun ablation",
+      "risk": "fissure may bias toward open dark gaps"
+    },
+    {
+      "id": "P11",
+      "prompt": "thin branching fracture in borehole core",
+      "family": "context_ablation",
+      "priority": 2,
+      "role": "borehole versus drill-core context ablation",
+      "risk": "less common wording may weaken retrieval"
+    },
+    {
+      "id": "P12",
+      "prompt": "visible narrow fracture trace in drill core",
+      "family": "contrast_ablation",
+      "priority": 2,
+      "role": "short contrast-neutral appearance variant",
+      "risk": "visible is weakly discriminative"
+    },
+    {
+      "id": "P13",
+      "prompt": "dark open fracture cutting across rock core",
+      "family": "dark_open",
+      "priority": 2,
+      "role": "wide or continuous dark-break variant",
+      "risk": "may select physical core ends and shadows"
+    },
+    {
+      "id": "P14",
+      "prompt": "pale healed fracture trace crossing dark rock core",
+      "family": "healed_pale",
+      "priority": 2,
+      "role": "light-on-dark fracture contrast variant",
+      "risk": "contrast assumption may not transfer to light cores"
+    },
+    {
+      "id": "P15",
+      "prompt": "irregular fracture inside the rock core material",
+      "family": "interior_context",
+      "priority": 2,
+      "role": "edge-suppression variant without explicit negation",
+      "risk": "may miss boundary-connected fractures"
+    },
+    {
+      "id": "P16",
+      "prompt": "thin branching fracture in drill core, not a shadow or core edge",
+      "family": "hard_negative",
+      "priority": 3,
+      "role": "shadow and boundary diagnostic",
+      "risk": "text encoder may ignore or invert negation"
+    },
+    {
+      "id": "P17",
+      "prompt": "irregular fracture trace in rock core, not a paint mark or label",
+      "family": "hard_negative",
+      "priority": 3,
+      "role": "annotation-mark diagnostic",
+      "risk": "text encoder may ignore or invert negation"
+    },
+    {
+      "id": "P18",
+      "prompt": "narrow crack in drill core, not bedding or grain texture",
+      "family": "hard_negative",
+      "priority": 3,
+      "role": "bedding and texture diagnostic",
+      "risk": "text encoder may ignore or invert negation"
+    }
+  ]
+}
